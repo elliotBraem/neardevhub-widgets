@@ -33,37 +33,94 @@ const SidebarContainer = styled.div`
   }
 `;
 
+const FeedHeader = styled.div`
+  background: white;
+  padding: 0 3rem;
+
+  @media screen and (max-width: 960px) {
+    padding: 0 1rem;
+  }
+`;
+
+function PostCard(postId) {
+  return (
+    <div className="py-2" style={{ minHeight: "150px" }}>
+      <Widget
+        src={"${REPL_DEVHUB}/widget/devhub.entity.post.Post"}
+        props={{
+          id: postId,
+          expandable: true,
+          defaultExpanded: false,
+          isInList: true,
+          draftState,
+          isPreview: false,
+          referral: postId,
+        }}
+      />
+    </div>
+  );
+}
+
 return (
   <div style={{ maxWidth: "100%" }}>
-    <div class="col">
-      <div class="d-flex w-100">
-        <MainContent>
+    <FeedHeader>
+      <div
+        className="my-4 d-flex align-items-center justify-content-between"
+        style={{ gap: "2.5rem" }}
+      >
+        <div class="d-flex align-items-center justify-content-between">
+          <small class="text-muted">
+            <span>Required tags:</span>
+            <Link
+              to={href({
+                widgetSrc: "${REPL_DEVHUB}/widget/app",
+                params: { page: "feed", tag: community.tag },
+              })}
+            >
+              <Widget
+                src={"${REPL_DEVHUB}/widget/devhub.components.atom.Tag"}
+                props={{
+                  tag: community.tag,
+                }}
+              />
+            </Link>
+          </small>
+        </div>
+        {context.accountId && (
           <Widget
-            src={"${REPL_DEVHUB}/widget/devhub.feature.post-search.panel"}
+            src={
+              "${REPL_DEVHUB}/widget/devhub.components.molecule.PostControls"
+            }
             props={{
-              hideHeader: true,
-              tag: communityData.tag,
-              children: (
-                <Widget
-                  src={
-                    "${REPL_DEVHUB}/widget/devhub.components.molecule.PostControls"
-                  }
-                  props={{
-                    title: "Post",
-                    href: href({
-                      widgetSrc: "${REPL_DEVHUB}/widget/app",
-                      params: {
-                        page: "create",
-                        labels: [communityData.tag],
-                      },
-                    }),
-                  }}
-                />
-              ),
-              recency,
-              transactionHashes: props.transactionHashes,
+              title: "Post",
+              href: href({
+                widgetSrc: "${REPL_DEVHUB}/widget/app",
+                params: {
+                  page: "create",
+                  labels: [community.tag],
+                },
+              }),
             }}
           />
+        )}
+      </div>
+    </FeedHeader>
+    <div className="col">
+      <div className="d-flex w-100">
+        <MainContent>
+          <div className="row w-100">
+            <div className="col">
+              <Widget
+                src={"${REPL_DEVHUB}/widget/devhub.entity.addon.blog.Feed"}
+                props={{
+                  includeLabels: [handle],
+                  // excludeLabels: ["blog"],
+                  renderItem: PostCard,
+                  Layout: (children) => children,
+                }}
+              />
+            </div>
+          </div>
         </MainContent>
         <SidebarContainer>
           <Widget

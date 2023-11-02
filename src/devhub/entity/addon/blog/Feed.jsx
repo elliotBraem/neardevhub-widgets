@@ -24,19 +24,6 @@ const Notification = styled.p`
   color: #3252a6;
 `;
 
-const Heading = styled.h3`
-  color: #151515;
-  font-size: 2.5rem;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%; /* 48px */
-  margin-bottom: 2rem;
-
-  @media screen and (max-width: 768px) {
-    font-size: 2rem;
-  }
-`;
-
 const QUERYAPI_ENDPOINT = `https://near-queryapi.api.pagoda.co/v1/graphql/`;
 const DISPLAY_COUNT = 10;
 
@@ -160,7 +147,6 @@ return (
         hasMore={hasNext}
         loader={renderLoader()}
       >
-        <Heading>Latest Blog Posts</Heading>
         <Layout>
           {/* Layout */}
           {postIds.map(cachedRenderItem)}

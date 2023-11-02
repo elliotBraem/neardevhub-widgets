@@ -16,6 +16,20 @@ const Grid = styled.div`
   }
 `;
 
+const Heading = styled.h3`
+  color: #151515;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 48px */
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: 768px) {
+    font-size: 2rem;
+  }
+`;
+
+
 function BlogCard(postId) {
   return (
     <Link
@@ -35,6 +49,7 @@ function BlogCard(postId) {
 
 return (
   <div class="row w-100">
+    <Heading>Latest Blog Posts</Heading>
     <Widget
       src={"${REPL_DEVHUB}/widget/devhub.entity.addon.blog.Feed"}
       // TODO: This needs to filter by more labels
